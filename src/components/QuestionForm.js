@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 function QuestionForm(props) {
   const [formData, setFormData] = useState({
     prompt: "",
@@ -11,17 +10,24 @@ function QuestionForm(props) {
   });
 
   function handleChange(event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: name === "correctIndex" ? parseInt(value) : value,
+      answers: [
+        prevState.answer1,
+        prevState.answer2,
+        prevState.answer3,
+        prevState.answer4
+      ]
+    }));
   }
+
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
   }
-
   return (
     <section>
       <h1>New Question</h1>
